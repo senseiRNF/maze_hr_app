@@ -12,54 +12,36 @@ class HomeDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.primary,
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              child: core.selectedWidget(),
-            ),
-            const Divider(
-              color: Colors.black54,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                InkWell(
-                  onTap: () => core.onChangeSelectedMenu(index: 1),
-                  customBorder: const CircleBorder(),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Icon(
-                      Icons.home,
-                      size: 30.0,
-                      color: core.selectedMenu == 1
-                          ? Theme.of(context).colorScheme.primary
-                          : Colors.grey,
-                    ),
-                  ),
-                ),
-                InkWell(
-                  onTap: () => core.onChangeSelectedMenu(index: 2),
-                  customBorder: const CircleBorder(),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Icon(
-                      Icons.person,
-                      size: 30.0,
-                      color: core.selectedMenu == 2
-                          ? Theme.of(context).colorScheme.primary
-                          : Colors.grey,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 5.0,
-            ),
-          ],
+        child: core.selectedWidget(),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: core.selectedMenu,
+        // backgroundColor: Theme.of(context).colorScheme.secondary,
+        onTap: (selectedIndex) => core.onChangeSelectedMenu(
+          index: selectedIndex,
         ),
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home,
+            ),
+            label: "Beranda",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.grid_view,
+            ),
+            label: "Menu",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.person,
+            ),
+            label: "Profil",
+          ),
+        ],
       ),
     );
   }

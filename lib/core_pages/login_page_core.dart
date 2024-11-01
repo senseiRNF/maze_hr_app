@@ -43,6 +43,7 @@ class LoginCore extends State<LoginPage> {
         department: "Research & Development",
         division: "Information Technology",
         role: "Superuser",
+        avatar: "https://i.ytimg.com/vi/x5cdtS1HDq4/hqdefault.jpg?sqp=-oaymwEmCOADEOgC8quKqQMa8AEB-AH-BIAC4AOKAgwIABABGBMgTih_MA8=&rs=AOn4CLA5qFPIIcZwYOBHdUPrr3R4KYyjKg",
         companyName: "PT Maju Mundur Sejahtera",
         companyAddress: "Citra Indah City Park",
         pointLatitude: "-6.483641011972485",

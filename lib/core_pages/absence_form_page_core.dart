@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:maze_hr_app/services/local/dialog_functions.dart';
 import 'package:maze_hr_app/services/local/route_functions.dart';
-import 'package:maze_hr_app/view_pages/attendance_form_display.dart';
+import 'package:maze_hr_app/view_pages/absence_form_display.dart';
 
-class AttendanceFormPage extends StatefulWidget {
-  const AttendanceFormPage({super.key});
+class AbsenceFormPage extends StatefulWidget {
+  const AbsenceFormPage({super.key});
 
   @override
-  State createState() => AttendanceFormCore();
+  State createState() => AbsenceFormCore();
 }
 
-class AttendanceFormCore extends State<AttendanceFormPage> {
+class AbsenceFormCore extends State<AbsenceFormPage> {
   int requestType = 1;
 
   TextEditingController startDateTEC = TextEditingController();
@@ -75,6 +75,6 @@ class AttendanceFormCore extends State<AttendanceFormPage> {
 
   @override
   Widget build(BuildContext context) {
-    return AttendanceFormDisplay(core: this);
+    return AbsenceFormDisplay(core: this);
   }
 }

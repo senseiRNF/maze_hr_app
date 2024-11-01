@@ -10,6 +10,7 @@ class LocalAuthJson {
   String? department;
   String? division;
   String? role;
+  String? avatar;
   String? companyName;
   String? companyAddress;
   String? pointLatitude;
@@ -25,6 +26,7 @@ class LocalAuthJson {
     this.department,
     this.division,
     this.role,
+    this.avatar,
     this.companyName,
     this.companyAddress,
     this.pointLatitude,
@@ -41,6 +43,7 @@ class LocalAuthJson {
     "department": department,
     "division": division,
     "role": role,
+    "avatar": avatar,
     "company_name": companyName,
     "company_address": companyAddress,
     "point_latitude": pointLatitude,
@@ -63,6 +66,7 @@ class LocalAuthJson {
         department: data["department"],
         division: data["division"],
         role: data["role"],
+        avatar: data["avatar"],
         companyAddress: data["company_address"],
         companyName: data["company_name"],
         pointLatitude: data["point_latitude"],

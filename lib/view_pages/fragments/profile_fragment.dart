@@ -98,12 +98,13 @@ class ProfileFragment extends StatelessWidget {
                   Text(
                     core.profileList[index]["title"],
                     style: TextStyle(
-                      color: Colors.black54,
+                      color: Colors.white.withOpacity(0.8),
                     ),
                   ),
                   Text(
                     core.profileList[index]["body"],
                     style: TextStyle(
+                      color: Colors.white,
                       fontSize: 18.0,
                     ),
                   ),

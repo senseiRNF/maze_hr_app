@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:maze_hr_app/core_pages/attendance_page_core.dart';
+import 'package:maze_hr_app/core_pages/absence_page_core.dart';
 
-class AttendanceDisplay extends StatelessWidget {
-  final AttendanceCore core;
+class AbsenceDisplay extends StatelessWidget {
+  final AbsenceCore core;
 
-  const AttendanceDisplay({
+  const AbsenceDisplay({
     super.key,
     required this.core,
   });
