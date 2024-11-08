@@ -15,6 +15,7 @@ class LocalAuthJson {
   String? companyAddress;
   String? pointLatitude;
   String? pointLongitude;
+  List? shortcutMenu;
 
   LocalAuthJson({
     this.userId,
@@ -31,6 +32,7 @@ class LocalAuthJson {
     this.companyAddress,
     this.pointLatitude,
     this.pointLongitude,
+    this.shortcutMenu,
   });
 
   String simplify() => jsonEncode({
@@ -48,6 +50,7 @@ class LocalAuthJson {
     "company_address": companyAddress,
     "point_latitude": pointLatitude,
     "point_longitude": pointLongitude,
+    "shortcut_menu": shortcutMenu,
   });
 
   static LocalAuthJson obscure({String? source}) {
@@ -71,6 +74,7 @@ class LocalAuthJson {
         companyName: data["company_name"],
         pointLatitude: data["point_latitude"],
         pointLongitude: data["point_longitude"],
+        shortcutMenu: data["shortcut_menu"],
       );
     }
 

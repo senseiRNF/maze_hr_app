@@ -207,7 +207,7 @@ class HomeFragment extends StatelessWidget {
                           ),
                         ),
                         ElevatedButton(
-                          onPressed: () => {},
+                          onPressed: () => core.onAttendancePressed(),
                           child: Text(
                             "Isi Absensi",
                           ),
@@ -235,7 +235,7 @@ class HomeFragment extends StatelessWidget {
                       Material(
                         color: Colors.transparent,
                         child: InkWell(
-                          onTap: () => {},
+                          onTap: () => core.onChangeShortcut(),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 10.0,
@@ -257,52 +257,74 @@ class HomeFragment extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(
                     horizontal: 5.0,
                   ),
-                  child: GridView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisSpacing: 5.0,
-                      crossAxisCount: 3,
-                      childAspectRatio: 1/0.8,
-                    ),
-                    itemCount: core.homeMenuList.length,
-                    itemBuilder: (gridContext, index) {
-                      return Card(
-                        elevation: 5.0,
-                        child: InkWell(
-                          onTap: () => core.homeMenuList[index]["on_pressed"](),
-                          customBorder: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Container(
-                                padding: EdgeInsets.all(10.0),
-                                decoration: BoxDecoration(
-                                  color: core.homeMenuList[index]["icon_color"] != null
-                                      ? core.homeMenuList[index]["icon_color"].withOpacity(0.2)
-                                      : Theme.of(context).colorScheme.primary.withOpacity(0.2),
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Icon(
-                                  core.homeMenuList[index]["icon"],
-                                  color: core.homeMenuList[index]["icon_color"] ?? Theme.of(context).colorScheme.primary,
-                                ),
+                  child: Builder(
+                    builder: (context) {
+                      List<Map<String, dynamic>> shortcutListed = [];
+
+                      for(int i = 0; i < core.homeMenuList.length; i++) {
+                        if(core.homeMenuList[i]["shortcut"] == true) {
+                          shortcutListed.add(core.homeMenuList[i]);
+                        }
+                      }
+
+                      return shortcutListed.isNotEmpty ?
+                      GridView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisSpacing: 5.0,
+                          crossAxisCount: 3,
+                          childAspectRatio: 1/0.8,
+                        ),
+                        itemCount: shortcutListed.length,
+                        itemBuilder: (gridContext, index) {
+                          return Card(
+                            elevation: 5.0,
+                            child: InkWell(
+                              onTap: () => shortcutListed[index]["on_pressed"](),
+                              customBorder: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5.0),
                               ),
-                              const SizedBox(
-                                height: 10.0,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.all(10.0),
+                                    decoration: BoxDecoration(
+                                      color: shortcutListed[index]["icon_color"] != null
+                                          ? shortcutListed[index]["icon_color"].withOpacity(0.2)
+                                          : Theme.of(context).colorScheme.primary.withOpacity(0.2),
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Icon(
+                                      shortcutListed[index]["icon"],
+                                      color: shortcutListed[index]["icon_color"] ?? Theme.of(context).colorScheme.primary,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10.0,
+                                  ),
+                                  Text(
+                                    shortcutListed[index]["title"],
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
                               ),
-                              Text(
-                                core.homeMenuList[index]["title"],
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
+                            ),
+                          );
+                        },
+                      ) :
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 20.0,
+                        ),
+                        child: Text(
+                          "Pintasan Belum Ditambahkan",
+                          textAlign: TextAlign.center,
                         ),
                       );
-                    },
+                    }
                   ),
                 ),
                 Padding(

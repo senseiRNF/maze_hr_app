@@ -51,7 +51,7 @@ class LoginCore extends State<LoginPage> {
       ).simplify(),
     ).then((writeResult) {
       if(writeResult == true) {
-        Future.delayed(const Duration(seconds: 5)).then((_) {
+        Future.delayed(const Duration(seconds: 3)).then((_) {
           if(mounted) {
             RouteFunctions(
               context: context,

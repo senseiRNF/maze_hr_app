@@ -19,9 +19,11 @@ class HomeDisplay extends StatelessWidget {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: core.selectedMenu,
         // backgroundColor: Theme.of(context).colorScheme.secondary,
-        onTap: (selectedIndex) => core.onChangeSelectedMenu(
+        onTap: (selectedIndex) => selectedIndex != 1 ?
+        core.onChangeSelectedMenu(
           index: selectedIndex,
-        ),
+        ) :
+        core.onShowAllMenu(),
         items: [
           BottomNavigationBarItem(
             icon: Icon(

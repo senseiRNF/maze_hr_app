@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:maze_hr_app/core_pages/absence_page_core.dart';
+import 'package:maze_hr_app/core_pages/attendance_page_core.dart';
 import 'package:maze_hr_app/core_pages/claim_page_core.dart';
+import 'package:maze_hr_app/core_pages/company_page_core.dart';
 import 'package:maze_hr_app/core_pages/payslip_page_core.dart';
+import 'package:maze_hr_app/core_pages/report_page_core.dart';
 import 'package:maze_hr_app/core_pages/setting_page_core.dart';
 import 'package:maze_hr_app/services/local/custom_date_time.dart';
+import 'package:maze_hr_app/services/local/dialog_functions.dart';
 import 'package:maze_hr_app/services/local/local_secure_storage.dart';
 import 'package:maze_hr_app/services/local/object/local_attendance_json.dart';
 import 'package:maze_hr_app/services/local/object/local_auth_json.dart';
 import 'package:maze_hr_app/services/local/object/local_info_json.dart';
 import 'package:maze_hr_app/services/local/route_functions.dart';
 import 'package:maze_hr_app/view_pages/fragments/home_fragment.dart';
-import 'package:maze_hr_app/view_pages/fragments/menu_fragment.dart';
 import 'package:maze_hr_app/view_pages/fragments/profile_fragment.dart';
 import 'package:maze_hr_app/view_pages/home_display.dart';
 
@@ -67,6 +70,7 @@ class HomeCore extends State<HomePage> {
             "title": "Kehadiran",
             "icon": Icons.share_arrival_time,
             "icon_color": null,
+            "shortcut": false,
             "on_pressed": () => RouteFunctions(
               context: context,
             ).moveTo(
@@ -77,6 +81,7 @@ class HomeCore extends State<HomePage> {
             "title": "Klaim",
             "icon": Icons.attach_money,
             "icon_color": null,
+            "shortcut": false,
             "on_pressed": () => RouteFunctions(
               context: context,
             ).moveTo(
@@ -87,33 +92,46 @@ class HomeCore extends State<HomePage> {
             "title": "Slip Gaji",
             "icon": Icons.receipt_long,
             "icon_color": Colors.deepOrange,
+            "shortcut": false,
             "on_pressed": () => RouteFunctions(
               context: context,
             ).moveTo(
               target: const PayslipPage(),
             ),
           },
-          // {
-          //   "title": "Perusahaan",
-          //   "icon": Icons.home_work,
-          //   "icon_color": Colors.amber,
-          //   "on_pressed": () => RouteFunctions(
-          //     context: context,
-          //   ).moveTo(
-          //     target: const CompanyPage(),
-          //   ),
-          // },
-          // {
-          //   "title": "Laporan",
-          //   "icon": Icons.list_alt,
-          //   "icon_color": Colors.deepOrange,
-          //   "on_pressed": () => RouteFunctions(
-          //     context: context,
-          //   ).moveTo(
-          //     target: const ReportPage(),
-          //   ),
-          // },
+          {
+            "title": "Perusahaan",
+            "icon": Icons.home_work,
+            "icon_color": Colors.amber,
+            "shortcut": false,
+            "on_pressed": () => RouteFunctions(
+              context: context,
+            ).moveTo(
+              target: const CompanyPage(),
+            ),
+          },
+          {
+            "title": "Laporan",
+            "icon": Icons.list_alt,
+            "icon_color": Colors.deepOrange,
+            "shortcut": false,
+            "on_pressed": () => RouteFunctions(
+              context: context,
+            ).moveTo(
+              target: const ReportPage(),
+            ),
+          },
         ];
+
+        if(authJson != null && authJson!.shortcutMenu != null) {
+          for(int i = 0; i < authJson!.shortcutMenu!.length; i++) {
+            for(int a = 0; a < homeMenuList.length; a++) {
+              if(authJson!.shortcutMenu![i] == a) {
+                homeMenuList[a]["shortcut"] = true;
+              }
+            }
+          }
+        }
 
         profileList = [
           {
@@ -167,10 +185,6 @@ class HomeCore extends State<HomePage> {
         return HomeFragment(
           core: this,
         );
-      case 1:
-        return MenuFragment(
-          core: this,
-        );
       case 2:
         return ProfileFragment(
           core: this,
@@ -189,6 +203,242 @@ class HomeCore extends State<HomePage> {
   ).moveTo(
     target: const SettingPage(),
   );
+
+  onShowAllMenu() => showModalBottomSheet(
+    context: context,
+    showDragHandle: true,
+    isScrollControlled: true,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(10.0),
+        topRight: Radius.circular(10.0),
+      ),
+    ),
+    backgroundColor: Colors.white,
+    builder: (mbsContext) {
+      return StatefulBuilder(
+        builder: (sbContext, StateSetter bsState) {
+          return GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisSpacing: 5.0,
+              crossAxisCount: 3,
+              childAspectRatio: 1/0.8,
+            ),
+            itemCount: homeMenuList.length,
+            itemBuilder: (gridContext, index) {
+              return Card(
+                elevation: 5.0,
+                child: InkWell(
+                  onTap: () => RouteFunctions(
+                    context: context,
+                  ).closeBack(
+                    callbackResult: index,
+                  ),
+                  customBorder: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(10.0),
+                        decoration: BoxDecoration(
+                          color: homeMenuList[index]["icon_color"] != null
+                              ? homeMenuList[index]["icon_color"].withOpacity(0.2)
+                              : Theme.of(context).colorScheme.primary.withOpacity(0.2),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          homeMenuList[index]["icon"],
+                          color: homeMenuList[index]["icon_color"] ?? Theme.of(context).colorScheme.primary,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      Text(
+                        homeMenuList[index]["title"],
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
+        },
+      );
+    },
+  ).then((bsResult) {
+    if(bsResult != null) {
+      homeMenuList[bsResult]["on_pressed"]();
+    }
+  });
+
+  onAttendancePressed() => RouteFunctions(
+    context: context,
+  ).moveTo(
+    target: AttendancePage(
+      attendanceJson: todayAttendance ?? LocalAttendanceJson(),
+    ),
+    callbackFunction: (callbackResult) => onInit(),
+  );
+
+  onChangeShortcut() {
+    List<Map<String, dynamic>> bsHomeMenuList = homeMenuList;
+
+    showModalBottomSheet(
+      context: context,
+      showDragHandle: true,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(10.0),
+          topRight: Radius.circular(10.0),
+        ),
+      ),
+      backgroundColor: Colors.white,
+      builder: (mbsContext) {
+        return StatefulBuilder(
+          builder: (sbContext, StateSetter bsState) {
+            changeShortcut({
+              required int index,
+              required bool active,
+            }) {
+              if(active == false) {
+                int shortcutTotal = 0;
+
+                for(int i = 0; i < homeMenuList.length; i++) {
+                  if(homeMenuList[i]["shortcut"] == true) {
+                    shortcutTotal = shortcutTotal + 1;
+
+                    if(shortcutTotal == 3) {
+                      break;
+                    }
+                  }
+                }
+
+                if(shortcutTotal < 3) {
+                  setState(() {
+                    homeMenuList[index]["shortcut"] = true;
+                  });
+
+                  bsState(() {
+                    bsHomeMenuList[index]["shortcut"] = true;
+                  });
+                } else {
+                  DialogFunctions(
+                    context: context,
+                  ).okDialog(
+                    icon: Icons.error,
+                    iconColor: Colors.red,
+                    message: "Pintasan yang dapat dipilih maksimal 3 menu",
+                  );
+                }
+              } else {
+                setState(() {
+                  homeMenuList[index]["shortcut"] = false;
+                });
+
+                bsState(() {
+                  bsHomeMenuList[index]["shortcut"] = false;
+                });
+              }
+            }
+
+            return GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisSpacing: 5.0,
+                crossAxisCount: 3,
+                childAspectRatio: 1/0.8,
+              ),
+              itemCount: bsHomeMenuList.length,
+              itemBuilder: (gridContext, index) {
+                return Card(
+                  elevation: 5.0,
+                  child: InkWell(
+                    onTap: () => changeShortcut(
+                      index: index,
+                      active: bsHomeMenuList[index]["shortcut"],
+                    ),
+                    customBorder: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    child: Stack(
+                      children: [
+                        bsHomeMenuList[index]["shortcut"] == true ?
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Icon(
+                                Icons.check_circle,
+                                color: Colors.lightGreen,
+                              ),
+                            ),
+                          ],
+                        ) :
+                        const Material(),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(10.0),
+                              decoration: BoxDecoration(
+                                color: bsHomeMenuList[index]["icon_color"] != null
+                                    ? bsHomeMenuList[index]["icon_color"].withOpacity(0.2)
+                                    : Theme.of(context).colorScheme.primary.withOpacity(0.2),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                bsHomeMenuList[index]["icon"],
+                                color: bsHomeMenuList[index]["icon_color"] ?? Theme.of(context).colorScheme.primary,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10.0,
+                            ),
+                            Text(
+                              bsHomeMenuList[index]["title"],
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            );
+          },
+        );
+      },
+    ).then((bsResult) async {
+      List<int> selectedShortcut = [];
+
+      for(int i = 0; i < homeMenuList.length; i++) {
+        if(homeMenuList[i]["shortcut"] == true) {
+          selectedShortcut.add(i);
+        }
+      }
+
+      LocalAuthJson overwriteAuth = authJson ?? LocalAuthJson();
+
+      overwriteAuth.shortcutMenu = selectedShortcut;
+
+      await LocalSecureStorage.writeKey(
+        key: LocalSecureKey.authKey,
+        data: overwriteAuth.simplify(),
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -166,4 +166,6 @@ class CustomDateTime {
         return "";
     }
   }
+
+  String timeOfDay() => DateFormat("HH:mm").format(dateTime);
 }
