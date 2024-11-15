@@ -71,5 +71,6 @@ class LocalSecureStorage {
 /// This class serve as an indentity of a key that used within Local Secure Storage
 class LocalSecureKey {
   static String authKey = "auth";
+  static String companyKey = "company";
   static String attendanceKey = "attendance";
 }

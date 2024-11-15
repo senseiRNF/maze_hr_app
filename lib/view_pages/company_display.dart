@@ -17,7 +17,122 @@ class CompanyDisplay extends StatelessWidget {
           'Perusahaan',
         ),
       ),
-      body: Stack(
+      body: core.companyJson != null ?
+      RefreshIndicator(
+        onRefresh: () async => core.onInit(),
+        child: ListView(
+          padding: const EdgeInsets.all(10.0),
+          children: [
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(10.0),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.secondary,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10.0),
+                        topRight: Radius.circular(10.0),
+                      ),
+                    ),
+                    child: const Text(
+                      'Informasi Perusahaan',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Nama',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                          ),
+                        ),
+                        Text(
+                          core.companyJson?.companyName ?? '(Tidak Diketahui)',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Alamat',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                          ),
+                        ),
+                        Text(
+                          core.companyJson?.companyAddress ?? '(Tidak Diketahui)',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Call Center',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                          ),
+                        ),
+                        Text(
+                          core.companyJson?.companyCallCenter ?? '(Tidak Diketahui)',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Email',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                          ),
+                        ),
+                        Text(
+                          core.companyJson?.companyEmail ?? '(Tidak Diketahui)',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ) :
+      Stack(
         children: [
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -51,7 +166,7 @@ class CompanyDisplay extends StatelessWidget {
             ],
           ),
           RefreshIndicator(
-            onRefresh: () async => {},
+            onRefresh: () async => core.onInit(),
             child: ListView(),
           ),
         ],

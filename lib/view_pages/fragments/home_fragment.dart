@@ -25,7 +25,7 @@ class HomeFragment extends StatelessWidget {
             color: Theme.of(context).colorScheme.primary,
           ),
           child: Text(
-            core.authJson?.companyName ?? '(Perusahaan Tidak Diketahui)',
+            core.companyJson?.companyName ?? '(Perusahaan Tidak Diketahui)',
             style: TextStyle(
               color: Colors.white,
               fontSize: 18.0,
@@ -146,7 +146,7 @@ class HomeFragment extends StatelessWidget {
                                     "Lokasi Kerja Hari Ini",
                                   ),
                                   Text(
-                                    core.authJson?.companyAddress ?? '(Lokasi Tidak Diketahui)',
+                                    core.companyJson?.companyAddress ?? '(Lokasi Tidak Diketahui)',
                                     style: TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w700,

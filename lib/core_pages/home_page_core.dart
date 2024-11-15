@@ -12,6 +12,7 @@ import 'package:maze_hr_app/services/local/dialog_functions.dart';
 import 'package:maze_hr_app/services/local/local_secure_storage.dart';
 import 'package:maze_hr_app/services/local/object/local_attendance_json.dart';
 import 'package:maze_hr_app/services/local/object/local_auth_json.dart';
+import 'package:maze_hr_app/services/local/object/local_company_json.dart';
 import 'package:maze_hr_app/services/local/object/local_info_json.dart';
 import 'package:maze_hr_app/services/local/route_functions.dart';
 import 'package:maze_hr_app/view_pages/fragments/home_fragment.dart';
@@ -27,6 +28,8 @@ class HomePage extends StatefulWidget {
 
 class HomeCore extends State<HomePage> {
   LocalAuthJson? authJson;
+
+  LocalCompanyJson? companyJson;
 
   LocalAttendanceJson? todayAttendance;
 
@@ -158,22 +161,32 @@ class HomeCore extends State<HomePage> {
       });
 
       await LocalSecureStorage.readKey(
-        key: LocalSecureKey.attendanceKey,
-      ).then((attendanceResult) {
-        LocalAttendanceJson? todayAttendanceResult;
-
-        List<LocalAttendanceJson> attendanceList = LocalAttendanceJson.obscureList(
-          source: attendanceResult,
-        );
-
-        for(int i = 0; i < attendanceList.length; i++) {
-          if(attendanceList[i].dateAttendance == DateFormat("yyyy-MM-dd").format(DateTime.now())) {
-            todayAttendanceResult = attendanceList[i];
-          }
-        }
-
+        key: LocalSecureKey.companyKey,
+      ).then((companyResult) async {
         setState(() {
-          todayAttendance = todayAttendanceResult;
+          companyJson = LocalCompanyJson.obscure(
+            source: companyResult,
+          );
+        });
+
+        await LocalSecureStorage.readKey(
+          key: LocalSecureKey.attendanceKey,
+        ).then((attendanceResult) {
+          LocalAttendanceJson? todayAttendanceResult;
+
+          List<LocalAttendanceJson> attendanceList = LocalAttendanceJson.obscureList(
+            source: attendanceResult,
+          );
+
+          for(int i = 0; i < attendanceList.length; i++) {
+            if(attendanceList[i].dateAttendance == DateFormat("yyyy-MM-dd").format(DateTime.now())) {
+              todayAttendanceResult = attendanceList[i];
+            }
+          }
+
+          setState(() {
+            todayAttendance = todayAttendanceResult;
+          });
         });
       });
     });
