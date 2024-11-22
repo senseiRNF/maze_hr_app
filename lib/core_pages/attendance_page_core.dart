@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:maze_hr_app/services/local/custom_date_time.dart';
 import 'package:maze_hr_app/services/local/dialog_functions.dart';
 import 'package:maze_hr_app/services/local/local_secure_storage.dart';
@@ -147,7 +148,7 @@ class AttendanceCore extends State<AttendancePage> {
     await onDeterminePosition().then((position) {
       double? distanceInMeter;
 
-      if(position != null && workplaceLat != null && workplaceLon != null) {
+      if(position != null /*&& workplaceLat != null && workplaceLon != null*/) {
         distanceInMeter = Geolocator.distanceBetween(
           workplaceLat,
           workplaceLon,
@@ -201,6 +202,28 @@ class AttendanceCore extends State<AttendancePage> {
   }
 
   File convertAttendancePhoto() => File(attendancePhoto!.path);
+
+  onSubmitAttendance() async {
+    await LocalSecureStorage.readKey(
+      key: LocalSecureKey.attendanceKey,
+    ).then((attendanceResult) {
+      LocalAttendanceJson? todayAttendanceResult;
+
+      List<LocalAttendanceJson> attendanceList = LocalAttendanceJson.obscureList(
+        source: attendanceResult,
+      );
+
+      for(int i = 0; i < attendanceList.length; i++) {
+        if(attendanceList[i].dateAttendance == DateFormat("yyyy-MM-dd").format(DateTime.now())) {
+          todayAttendanceResult = attendanceList[i];
+        }
+      }
+
+      if(todayAttendanceResult != null) {
+        
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -14,7 +14,7 @@ class CompanyDisplay extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Perusahaan',
+          'Informasi Perusahaan',
         ),
       ),
       body: core.companyJson != null ?
@@ -40,7 +40,7 @@ class CompanyDisplay extends StatelessWidget {
                       ),
                     ),
                     child: const Text(
-                      'Informasi Perusahaan',
+                      'Nama Perusahaan',
                       style: TextStyle(
                         fontSize: 16.0,
                       ),
@@ -48,82 +48,116 @@ class CompanyDisplay extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Nama',
-                          style: TextStyle(
-                            fontSize: 16.0,
-                          ),
-                        ),
-                        Text(
-                          core.companyJson?.companyName ?? '(Tidak Diketahui)',
-                          style: TextStyle(
-                            fontSize: 16.0,
-                          ),
-                        ),
-                      ],
+                    child: Text(
+                      core.companyJson?.companyName ?? '(Tidak Diketahui)',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(10.0),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.secondary,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10.0),
+                        topRight: Radius.circular(10.0),
+                      ),
+                    ),
+                    child: const Text(
+                      'Alamat',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                      ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Alamat',
-                          style: TextStyle(
-                            fontSize: 16.0,
-                          ),
-                        ),
-                        Text(
-                          core.companyJson?.companyAddress ?? '(Tidak Diketahui)',
-                          style: TextStyle(
-                            fontSize: 16.0,
-                          ),
-                        ),
-                      ],
+                    child: Text(
+                      core.companyJson?.companyAddress ?? '(Tidak Diketahui)',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(10.0),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.secondary,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10.0),
+                        topRight: Radius.circular(10.0),
+                      ),
+                    ),
+                    child: const Text(
+                      'Call Center',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                      ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Call Center',
-                          style: TextStyle(
-                            fontSize: 16.0,
-                          ),
-                        ),
-                        Text(
-                          core.companyJson?.companyCallCenter ?? '(Tidak Diketahui)',
-                          style: TextStyle(
-                            fontSize: 16.0,
-                          ),
-                        ),
-                      ],
+                    child: Text(
+                      core.companyJson?.companyCallCenter ?? '(Tidak Diketahui)',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(10.0),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.secondary,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10.0),
+                        topRight: Radius.circular(10.0),
+                      ),
+                    ),
+                    child: const Text(
+                      'Email',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                      ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Email',
-                          style: TextStyle(
-                            fontSize: 16.0,
-                          ),
-                        ),
-                        Text(
-                          core.companyJson?.companyEmail ?? '(Tidak Diketahui)',
-                          style: TextStyle(
-                            fontSize: 16.0,
-                          ),
-                        ),
-                      ],
+                    child: Text(
+                      core.companyJson?.companyEmail ?? '(Tidak Diketahui)',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                      ),
                     ),
                   ),
                 ],
